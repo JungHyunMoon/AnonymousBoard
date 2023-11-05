@@ -1,14 +1,12 @@
 package com.anonymousboard.controller;
 
 import com.anonymousboard.dto.request.CreateBoardRequestDto;
+import com.anonymousboard.dto.response.BoardListResponseDto;
 import com.anonymousboard.dto.response.BoardResponseDto;
 import com.anonymousboard.entity.Board;
 import com.anonymousboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +21,10 @@ public class BoardController {
         boardService.saveBoard(board);
 
         return new BoardResponseDto(board);
+    }
+
+    @GetMapping("")
+    public BoardListResponseDto getBoards() {
+        return boardService.getBoards();
     }
 }

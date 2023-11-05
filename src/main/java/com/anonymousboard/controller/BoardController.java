@@ -8,6 +8,8 @@ import com.anonymousboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/board")
@@ -15,7 +17,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("")
+    @PostMapping()
     public BoardResponseDto createBoard(@RequestBody CreateBoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         boardService.saveBoard(board);
@@ -23,8 +25,19 @@ public class BoardController {
         return new BoardResponseDto(board);
     }
 
-    @GetMapping("")
+    @GetMapping()
     public BoardListResponseDto getBoards() {
-        return boardService.getBoards();
+        List<Board> boards = boardService.getBoards();
+        BoardListResponseDto boardListResponseDto = new BoardListResponseDto();
+        for (Board board : boards) {
+            boardListResponseDto.addBoardResponseDto(new BoardResponseDto(board));
+        }
+        return boardListResponseDto;
+    }
+
+    @GetMapping("/{id}")
+    public BoardResponseDto getBoardById(@PathVariable long id) {
+        Board board = boardService.getBoardById(id);
+        return new BoardResponseDto(board);
     }
 }

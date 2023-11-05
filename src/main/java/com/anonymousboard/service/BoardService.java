@@ -19,14 +19,14 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public BoardListResponseDto getBoards() {
+    public List<Board> getBoards() {
         List<Board> boards = boardRepository.findAll();
-        BoardListResponseDto boardListResponseDto = new BoardListResponseDto();
 
-        for (Board board : boards) {
-            boardListResponseDto.addBoardResponseDto(new BoardResponseDto(board));
-        }
 
-        return boardListResponseDto;
+        return boards;
+    }
+
+    public Board getBoardById(long id) {
+        return boardRepository.findById(id).orElse(null);
     }
 }

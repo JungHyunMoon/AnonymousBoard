@@ -1,7 +1,5 @@
 package com.anonymousboard.service;
 
-import com.anonymousboard.dto.response.BoardListResponseDto;
-import com.anonymousboard.dto.response.BoardResponseDto;
 import com.anonymousboard.entity.Board;
 import com.anonymousboard.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,7 @@ public class BoardService {
     }
 
     public List<Board> getBoards() {
-        List<Board> boards = boardRepository.findAll();
+        List<Board> boards = boardRepository.findAllByOrderByCreatedAtDesc();
 
 
         return boards;

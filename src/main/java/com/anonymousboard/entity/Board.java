@@ -27,9 +27,9 @@ public class Board {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "CreateAt", nullable = false)
+    @Column(name = "createdAt", nullable = false)
     @CreationTimestamp
-    private Date CreateAt;
+    private Date createdAt;
 
     public Board(CreateBoardRequestDto requestDto) {
         this.title = requestDto.getTitle();

@@ -6,6 +6,8 @@ import com.anonymousboard.dto.response.BoardResponseDto;
 import com.anonymousboard.entity.Board;
 import com.anonymousboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,26 +20,26 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping()
-    public BoardResponseDto createBoard(@RequestBody CreateBoardRequestDto requestDto) {
+    public ResponseEntity<BoardResponseDto> createBoard(@RequestBody CreateBoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         boardService.saveBoard(board);
 
-        return new BoardResponseDto(board);
+        return new ResponseEntity<>(new BoardResponseDto(board), HttpStatus.OK);
     }
 
     @GetMapping()
-    public BoardListResponseDto getBoards() {
+    public ResponseEntity<BoardListResponseDto> getBoards() {
         List<Board> boards = boardService.getBoards();
         BoardListResponseDto boardListResponseDto = new BoardListResponseDto();
         for (Board board : boards) {
             boardListResponseDto.addBoardResponseDto(new BoardResponseDto(board));
         }
-        return boardListResponseDto;
+        return new ResponseEntity<>(boardListResponseDto, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public BoardResponseDto getBoardById(@PathVariable long id) {
+    public ResponseEntity<BoardResponseDto> getBoardById(@PathVariable long id) {
         Board board = boardService.getBoardById(id);
-        return new BoardResponseDto(board);
+        return new ResponseEntity<>(new BoardResponseDto(board), HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package com.anonymousboard.entity;
 
 
 import com.anonymousboard.dto.request.CreateBoardRequestDto;
+import com.anonymousboard.dto.request.UpdateBoardRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +37,19 @@ public class Board {
         this.title = requestDto.getTitle();
         this.author = requestDto.getAuthor();
         this.password = requestDto.getPassword();
+        this.content = requestDto.getContent();
+    }
+
+    public Board(UpdateBoardRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.author = requestDto.getAuthor();
+        this.password = requestDto.getPassword();
+        this.content = requestDto.getContent();
+    }
+
+    public void update(UpdateBoardRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.author = requestDto.getAuthor();
         this.content = requestDto.getContent();
     }
 }

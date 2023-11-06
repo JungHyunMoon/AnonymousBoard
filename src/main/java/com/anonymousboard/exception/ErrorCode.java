@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
     BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 글이 없습니다."),
-    DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DB에러")
+    DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DB에러"),
+    BAD_PARAMETER(HttpStatus.BAD_REQUEST, "잘못된 password 입니다.")
     ;
     private HttpStatus status;
     private String message;

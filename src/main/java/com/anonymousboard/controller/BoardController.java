@@ -1,9 +1,11 @@
 package com.anonymousboard.controller;
 
 import com.anonymousboard.dto.request.CreateBoardRequestDto;
+import com.anonymousboard.dto.request.UpdateBoardRequestDto;
 import com.anonymousboard.dto.response.BoardListResponseDto;
 import com.anonymousboard.dto.response.BoardResponseDto;
 import com.anonymousboard.entity.Board;
+import com.anonymousboard.exception.CustomException;
 import com.anonymousboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,8 +40,24 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BoardResponseDto> getBoardById(@PathVariable long id) {
+    public ResponseEntity<BoardResponseDto> getBoardById(@PathVariable long id) throws CustomException {
         Board board = boardService.getBoardById(id);
+        if (board == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(new BoardResponseDto(board), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable long id, @RequestBody UpdateBoardRequestDto requestDto) throws CustomException {
+
+        Board board = boardService.updateBoard(id, requestDto);
+        return new ResponseEntity<>(new BoardResponseDto(board), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBoard(@PathVariable long id, @RequestHeader String password) throws CustomException {
+        boardService.deleteBoard(id, password);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

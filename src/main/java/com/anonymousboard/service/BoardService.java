@@ -36,10 +36,7 @@ public class BoardService {
     // 게시글 수정
     @Transactional
     public Board updateBoard(long id, UpdateBoardRequestDto requestDto) throws CustomException {
-        Board board = boardRepository.findById(id).orElse(null);
-        if (board == null) {
-            throw new CustomException(ErrorCode.BOARD_NOT_FOUND);
-        }
+        Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
         if (checkPwd(board, requestDto.getPassword())) {
             board.update(requestDto);
         } else {

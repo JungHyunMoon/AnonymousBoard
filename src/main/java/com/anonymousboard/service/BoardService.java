@@ -8,10 +8,12 @@ import com.anonymousboard.exception.CustomException;
 import com.anonymousboard.exception.ErrorCode;
 import com.anonymousboard.jwt.JwtUtil;
 import com.anonymousboard.repository.BoardRepository;
+import com.anonymousboard.security.UserDetailsImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,6 +42,10 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    public Board getBoardByIdOrThrow(long id) throws CustomException {
+        return boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
+    }
+
     public BoardResponseDtos getBoards() {
         BoardResponseDtos boardResponseDtos = new BoardResponseDtos();
         List<Board> boards = boardRepository.findAllByOrderByCreatedAtDesc();
@@ -55,28 +61,33 @@ public class BoardService {
         return boardResponseDtos;
     }
 
-    public Board getBoardByIdOrThrow(long id) throws CustomException {
-        return boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
-    }
-
     public BoardResponseDto getBoardById(long id) throws CustomException {
         Board board = getBoardByIdOrThrow(id);
         return new BoardResponseDto(board);
     }
 
     @Transactional
-    public BoardResponseDto updateBoard(long id, UpdateBoardRequestDto requestDto) throws CustomException {
+    public BoardResponseDto updateBoard(long id, UpdateBoardRequestDto requestDto, UserDetailsImpl userDetails) throws CustomException {
         Board board = getBoardByIdOrThrow(id);
-        board.update(requestDto);
+        if (userDetails.getUsername().equals(board.getUsername())) {
+            board.update(requestDto);
+        } else {
+            throw new CustomException(ErrorCode.NO_AUTHORIZATION);
+        }
 
         return new BoardResponseDto(board);
     }
 
     @Transactional
-    public void markTaskAsComplete(long id) throws CustomException {
+    public void markTaskAsComplete(long id, @AuthenticationPrincipal UserDetailsImpl userDetails) throws CustomException {
         Board board = getBoardByIdOrThrow(id);
-        board.setStatus(true);
+        if (userDetails.getUsername().equals(board.getUsername())) {
+            board.setStatus(true);
+        } else {
+            throw new CustomException(ErrorCode.NO_AUTHORIZATION);
+        }
     }
+
 
 
 

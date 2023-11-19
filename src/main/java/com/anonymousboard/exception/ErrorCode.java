@@ -12,7 +12,8 @@ public enum ErrorCode {
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DB에러"),
     BAD_PARAMETER(HttpStatus.BAD_REQUEST, "잘못된 password 입니다."),
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "유효하지 않은 인증 정보 입니다."),
-    DUPLICATED_USERNAME(HttpStatus.BAD_REQUEST, "중복된 username입니다.")
+    DUPLICATED_USERNAME(HttpStatus.BAD_REQUEST, "중복된 username입니다."),
+    NO_AUTHORIZATION(HttpStatus.NON_AUTHORITATIVE_INFORMATION, "권한이 없습니다.")
     ;
     private HttpStatus status;
     private String message;

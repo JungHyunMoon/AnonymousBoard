@@ -6,7 +6,6 @@ import com.anonymousboard.dto.response.BoardResponseDtos;
 import com.anonymousboard.dto.response.BoardResponseDto;
 import com.anonymousboard.entity.Board;
 import com.anonymousboard.exception.CustomException;
-import com.anonymousboard.jwt.JwtUtil;
 import com.anonymousboard.security.UserDetailsImpl;
 import com.anonymousboard.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
 
     private final BoardService boardService;
-    private final JwtUtil jwtUtil;
 
     /**
      * 할일카드 작성
@@ -66,7 +64,7 @@ public class BoardController {
      * 할일카드 수정
      * @param id
      * @param requestDto
-     * @param req
+     * @param userDetails
      * @return
      * @throws CustomException
      */
@@ -79,7 +77,7 @@ public class BoardController {
     /**
      * 할일카드 완료
      * @param id
-     * @param req
+     * @param userDetails
      * @return
      * @throws CustomException
      */

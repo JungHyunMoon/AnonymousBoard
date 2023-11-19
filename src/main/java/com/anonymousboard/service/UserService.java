@@ -1,6 +1,6 @@
 package com.anonymousboard.service;
 
-import com.anonymousboard.dto.request.BoardRequestDto;
+import com.anonymousboard.dto.request.SignRequestDto;
 import com.anonymousboard.entity.User;
 import com.anonymousboard.exception.CustomException;
 import com.anonymousboard.exception.ErrorCode;
@@ -23,22 +23,20 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public void signup(HttpServletResponse response, BoardRequestDto requestDto) {
+    public void signup(SignRequestDto requestDto) throws CustomException {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
 
-        // 회원 중복 확인
-        Optional<User> checkUsername = userRepository.findByUsername(username);
-        if (checkUsername.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+        Optional<User> DuplicatedUser = userRepository.findByUsername(username);
+        if (DuplicatedUser.isPresent()) {
+            throw new CustomException(ErrorCode.DUPLICATED_USERNAME);
         }
 
-        // 사용자 등록
         User user = new User(username, password);
         userRepository.save(user);
     }
 
-    public void signin(HttpServletResponse response, BoardRequestDto requestDto) throws CustomException {
+    public void signin(HttpServletResponse response, SignRequestDto requestDto) throws CustomException {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
 

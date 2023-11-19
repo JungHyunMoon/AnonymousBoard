@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardRequestDto {
+public class SignRequestDto {
     @ValidUsername
     private String username;
     @ValidPassword

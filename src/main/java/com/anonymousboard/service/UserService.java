@@ -40,12 +40,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void signin(SignRequestDto requestDto, HttpServletResponse response) throws CustomException {
+    public String signin(SignRequestDto requestDto, HttpServletResponse response) throws CustomException {
         UserDetails userDetails = userDetailsService.loadUserByUsername(requestDto.getUsername());
 
         if (passwordEncoder.matches(requestDto.getPassword(), userDetails.getPassword())) {
-            String token = jwtUtil.createToken(userDetails.getUsername());
-            jwtUtil.addJwtToCookie(token, response);
+            return jwtUtil.createToken(userDetails.getUsername());
+//            jwtUtil.addJwtToCookie(token, response);
         } else {
             throw new CustomException(ErrorCode.BAD_PARAMETER);
         }

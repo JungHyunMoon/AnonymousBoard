@@ -2,6 +2,7 @@ package com.anonymousboard.controller;
 
 import com.anonymousboard.dto.request.SignRequestDto;
 import com.anonymousboard.exception.CustomException;
+import com.anonymousboard.jwt.JwtUtil;
 import com.anonymousboard.security.UserDetailsImpl;
 import com.anonymousboard.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody SignRequestDto requestDto) throws CustomException {
@@ -27,7 +29,8 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@Valid @RequestBody SignRequestDto requestDto, HttpServletResponse response) throws CustomException {
-        userService.signin(requestDto, response);
+        String token = userService.signin(requestDto, response);
+        jwtUtil.addJwtToCookie(token, response);
         return ResponseEntity.status(HttpStatus.OK).body("로그인 성공");
     }
 

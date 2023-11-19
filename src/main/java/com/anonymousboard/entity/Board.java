@@ -20,11 +20,8 @@ public class Board {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "author", nullable = false)
-    private String author;
-
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "content", nullable = false)
     private String content;
@@ -33,23 +30,12 @@ public class Board {
     @CreationTimestamp
     private Date createdAt;
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Board(CreateBoardRequestDto requestDto) {
         this.title = requestDto.getTitle();
-        this.author = requestDto.getAuthor();
-        this.password = requestDto.getPassword();
-        this.content = requestDto.getContent();
-    }
-
-    public Board(UpdateBoardRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.author = requestDto.getAuthor();
-        this.password = requestDto.getPassword();
-        this.content = requestDto.getContent();
-    }
-
-    public void update(UpdateBoardRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.author = requestDto.getAuthor();
         this.content = requestDto.getContent();
     }
 }

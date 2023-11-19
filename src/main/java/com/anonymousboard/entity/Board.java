@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
@@ -32,12 +33,17 @@ public class Board {
     private Date createdAt;
 
     @Column(name = "updatedAt", nullable = false)
-    @CreationTimestamp
+    @UpdateTimestamp
     private Date updatedAt;
 
     @Column(name = "status")
     @ColumnDefault("false")
     private boolean status;
+
+    @PreUpdate
+    public void setUpdatedAt() {
+        this.updatedAt = new Date();
+    }
 
     @Access(AccessType.PROPERTY)
     public boolean getStatus() {

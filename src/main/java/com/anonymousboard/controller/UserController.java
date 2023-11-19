@@ -1,6 +1,6 @@
 package com.anonymousboard.controller;
 
-import com.anonymousboard.dto.request.SignRequestDto;
+import com.anonymousboard.dto.request.BoardRequestDto;
 import com.anonymousboard.exception.CustomException;
 import com.anonymousboard.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,13 +18,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@Valid @RequestBody SignRequestDto requestDto, HttpServletResponse response) {
+    public ResponseEntity<String> signup(@Valid @RequestBody BoardRequestDto requestDto, HttpServletResponse response) {
         userService.signup(response, requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 성공");
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> signin(@Valid @RequestBody SignRequestDto requestDto, HttpServletResponse response) throws CustomException {
+    public ResponseEntity<String> signin(@Valid @RequestBody BoardRequestDto requestDto, HttpServletResponse response) throws CustomException {
         userService.signin(response, requestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body("로그인 성공");

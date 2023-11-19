@@ -5,6 +5,7 @@ import com.anonymousboard.dto.request.CreateBoardRequestDto;
 import com.anonymousboard.dto.request.UpdateBoardRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -30,11 +31,29 @@ public class Board {
     @CreationTimestamp
     private Date createdAt;
 
+    @Column(name = "updatedAt", nullable = false)
+    @CreationTimestamp
+    private Date updatedAt;
+
+    @Column(name = "status")
+    @ColumnDefault("false")
+    private boolean status;
+
+    @Access(AccessType.PROPERTY)
+    public boolean getStatus() {
+        return status;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
     public Board(CreateBoardRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+    }
+
+    public void update(UpdateBoardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }

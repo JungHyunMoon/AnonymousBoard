@@ -1,6 +1,6 @@
 package com.anonymousboard.service;
 
-import com.anonymousboard.dto.request.SignRequestDto;
+import com.anonymousboard.dto.request.BoardRequestDto;
 import com.anonymousboard.entity.User;
 import com.anonymousboard.exception.CustomException;
 import com.anonymousboard.exception.ErrorCode;
@@ -23,7 +23,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public void signup(HttpServletResponse response, SignRequestDto requestDto) {
+    public void signup(HttpServletResponse response, BoardRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
 
@@ -38,7 +38,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void signin(HttpServletResponse response, SignRequestDto requestDto) throws CustomException {
+    public void signin(HttpServletResponse response, BoardRequestDto requestDto) throws CustomException {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
 

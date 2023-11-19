@@ -27,8 +27,7 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@Valid @RequestBody SignRequestDto requestDto, HttpServletResponse response) throws CustomException {
-        userService.signin(response, requestDto);
-
+        userService.signin(requestDto, response);
         return ResponseEntity.status(HttpStatus.OK).body("로그인 성공");
     }
 

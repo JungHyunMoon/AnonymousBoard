@@ -45,7 +45,6 @@ public class UserService {
 
         if (passwordEncoder.matches(requestDto.getPassword(), userDetails.getPassword())) {
             return jwtUtil.createToken(userDetails.getUsername());
-//            jwtUtil.addJwtToCookie(token, response);
         } else {
             throw new CustomException(ErrorCode.BAD_PARAMETER);
         }

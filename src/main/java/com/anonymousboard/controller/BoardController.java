@@ -47,6 +47,12 @@ public class BoardController {
         BoardResponseDto boardResponseDto = boardService.updateBoard(id, requestDto);
         return new ResponseEntity<>(boardResponseDto, HttpStatus.OK);
     }
+
+    @PutMapping("/board/complete-status/{id}")
+    public ResponseEntity<String> markTaskAsComplete(@PathVariable long id) throws CustomException {
+        boardService.markTaskAsComplete(id);
+        return ResponseEntity.status(HttpStatus.OK).body("상태 변경 완료");
+    }
 //
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<Void> deleteBoard(@PathVariable long id, @RequestHeader String password) throws CustomException {

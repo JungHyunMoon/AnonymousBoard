@@ -76,6 +76,16 @@ public class BoardService {
         return new BoardResponseDto(board);
     }
 
+    @Transactional
+    public void markTaskAsComplete(long id) throws CustomException {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
+        board.setStatus(true);
+    }
+
+
+
+
+
     // 비밀번호 일치 확인
 //    private boolean checkPwd(Board board, String password) {
 //        return board.getPassword().equals(password);

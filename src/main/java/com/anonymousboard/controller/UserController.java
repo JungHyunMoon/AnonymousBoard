@@ -24,13 +24,13 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody SignRequestDto requestDto) throws CustomException {
         userService.signup(requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 성공");
+        return new ResponseEntity<>("회원가입 성공", HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@Valid @RequestBody SignRequestDto requestDto, HttpServletResponse response) throws CustomException {
         userService.signin(requestDto, response);
-        return ResponseEntity.status(HttpStatus.OK).body("로그인 성공");
+        return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
     }
 
 }

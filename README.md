@@ -50,4 +50,7 @@
 ![image](https://github.com/JungHyunMoon/AnonymousBoard/assets/120004247/f84737c8-5ed0-4551-93b7-e44453842c63)
 
 # API 명세
+postman:
 https://documenter.getpostman.com/view/30896712/2s9Ye8gEzD
+swagger:
+localhost:8080/swagger-ui/index.html

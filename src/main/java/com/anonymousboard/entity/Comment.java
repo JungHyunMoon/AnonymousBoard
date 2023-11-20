@@ -1,5 +1,6 @@
 package com.anonymousboard.entity;
 
+import com.anonymousboard.dto.request.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class Comment {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_username", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @PreUpdate
@@ -44,7 +45,7 @@ public class Comment {
         this.user = user;
     }
 
-    public void update(String content) {
-        this.content = content;
+    public void update(CommentRequestDto requestDto) {
+        this.content = requestDto.getContent();
     }
 }

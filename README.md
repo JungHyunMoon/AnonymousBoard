@@ -51,6 +51,6 @@
 
 # API 명세
 postman:
-https://documenter.getpostman.com/view/30896712/2s9Ye8gEzD
+https://documenter.getpostman.com/view/30896712/2s9Ye8gEzD <br>
 swagger:
 localhost:8080/swagger-ui/index.html

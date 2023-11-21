@@ -32,8 +32,8 @@ public class CommentController {
     }
 
     @DeleteMapping("comment/{cmtId}")
-    public ResponseEntity<String> deleteComment(@PathVariable long cmtId, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) throws CustomException {
-        commentService.deleteComment(cmtId, requestDto, userDetails);
+    public ResponseEntity<String> deleteComment(@PathVariable long cmtId, @AuthenticationPrincipal UserDetailsImpl userDetails) throws CustomException {
+        commentService.deleteComment(cmtId, userDetails);
         return new ResponseEntity<>("삭제 성공", HttpStatus.OK);
     }
 }

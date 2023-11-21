@@ -35,7 +35,7 @@ public class CommentService {
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         } else {
             Comment comment = checkComment.get();
-            if (comment.getUser().equals(userDetails.getUser())) {
+            if (comment.getUser().getId().equals(userDetails.getUser().getId())) {
                 comment.update(requestDto);
                 return comment;
             } else {
@@ -45,14 +45,13 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(long cmtId, CommentRequestDto requestDto, UserDetailsImpl userDetails) throws CustomException {
+    public void deleteComment(long cmtId, UserDetailsImpl userDetails) throws CustomException {
         Optional<Comment> checkComment = commentRepository.findById(cmtId);
         if (checkComment.isEmpty()) {
             throw new CustomException(ErrorCode.COMMENT_NOT_FOUND);
         } else {
             Comment comment = checkComment.get();
-            if (comment.getUser().equals(userDetails.getUser())) {
-
+            if (comment.getUser().getId().equals(userDetails.getUser().getId())) {
                 commentRepository.delete(comment);
             } else {
                 throw new CustomException(ErrorCode.NO_AUTHORIZATION);

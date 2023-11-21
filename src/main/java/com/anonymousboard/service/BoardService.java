@@ -68,6 +68,7 @@ public class BoardService {
 
     @Transactional
     public BoardResponseDto updateBoard(long id, UpdateBoardRequestDto requestDto, UserDetailsImpl userDetails) throws CustomException {
+
         Board board = getBoardByIdOrThrow(id);
         if (userDetails.getUsername().equals(board.getUsername())) {
             board.update(requestDto);
@@ -87,10 +88,6 @@ public class BoardService {
             throw new CustomException(ErrorCode.NO_AUTHORIZATION);
         }
     }
-
-
-
-
 
 
     // 비밀번호 일치 확인
